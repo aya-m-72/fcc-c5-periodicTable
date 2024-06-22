@@ -3,7 +3,7 @@ PSQL="psql --username=freecodecamp --dbname=periodic_table --tuples-only -c"
 if [[ $1 ]]
 then
   # check if integer for atomic_number elif check symbol else check name
-  RESULT=$($PSQL "SELECT elements.atomic_number,name,symbol,type,atomic_mass,melting_point_celsius,boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) FULL JOIN types USING(type_id) WHERE elements.atomic_number=$1 OR symbol='$1' OR name='$1';")
+  RESULT=$($PSQL "SELECT elements.atomic_number,name,symbol,type,atomic_mass,melting_point_celsius,boiling_point_celsius FROM elements FULL JOIN properties USING(atomic_number) FULL JOIN types USING(type_id) WHERE elements.atomic_number=$1 OR symbol ILIKE '$1' OR name ILIKE '$1';")
   if [[ -z $RESULT ]]
   then
     echo I could not find that element in the database.
